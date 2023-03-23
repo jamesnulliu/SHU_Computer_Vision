@@ -1,2 +1,2 @@
 # SHU_CV
-Computer Vision
+Open source course exercises and projects of Computer Vision of Shanghai Univirsity.
