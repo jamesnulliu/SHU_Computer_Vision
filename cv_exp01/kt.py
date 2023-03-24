@@ -1,6 +1,6 @@
 import cv2
-import exp01 as e01
-from exp01 import img
+import pic_manipulate as e01
+from pic_manipulate import img
 
 # 灰度化
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
