@@ -22,10 +22,16 @@ def showBGR():
     showImg(r'cv_exp01/output/green.jpg',g)
     showImg(r'cv_exp01/output/red.jpg',r)
 
-font = cv.FONT_HERSHEY_SIMPLEX
-cv.putText(img,'21121319 Liu Yanchen',(4,30), font, 1,(255,255,255),2,cv.LINE_AA)
-showImg(r'cv_exp01/output/nameAdded.png', img)
+def setName():
+    cv.putText(img,'21121319 Liu Yanchen',(4,30), 4, 1,(255,255,255),2,cv.LINE_AA)
+    showImg(r'cv_exp01/output/nameAdded.png', img)
 
-tree = img[514:831, 183:504]
-img[0:(831-514), 0:(504-183)] = tree
-showImg(r'cv_exp01/output/nameAdded.png', img)
+def copyTree(destY,destX,sourceY,sourceX,yLength,xLength,resizeY,resizeX):
+    tree = img[sourceY:sourceY+yLength,sourceX:sourceX+xLength]
+    print(tree.shape)
+    resizedtree = cv.resize(tree,(0,0), None,resizeX, resizeY,interpolation = cv.INTER_CUBIC)
+    img[destY:destY+resizedtree.shape[0],destX:destX+resizedtree.shape[1]] = resizedtree 
+
+# copyTree(190,133,190,530,315,295,1.0,0.9)
+# showImg("",img)
+
