@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 trainImg_Num = 8
 testImg_Num = 2
-K = 3
 
 def readTestImgsAndLabels():
     """
@@ -60,7 +61,6 @@ def getEngineFaces(images2D, K):
     images2D: a [N x (W * H)] np array containing the original images
     K: the number of engine faces
     """
-
     # Calculate the average face
     averageFace = np.mean(images2D, axis=0)
     averageFace = averageFace.astype('float32')
@@ -100,15 +100,15 @@ def trainFaces(trainImgs, labels):
     """
     orth_eigenVecs, averageFace = np.load('orth_engineVecs.npy', allow_pickle=True)
 
-    # reshape faceImgs to [N x (H * W)]
+    # reshape faceImgs to (N, HW) matrix
     trainImgs = trainImgs.reshape(trainImgs.shape[0], -1)
     trainImgs = trainImgs.astype('float64')
-    # reshape averageFace to [1 x (H * W)]
+    # reshape averageFace to (1, HW) matrix
     averageFace = averageFace.reshape(1, -1)
     # Subtract averageFace from faceImgs
     trainImgs -= averageFace
     # Calculate the engine values of the train faces
-    engineValues = np.dot(trainImgs, orth_eigenVecs.T)  # [N x K]
+    engineValues = np.dot(trainImgs, orth_eigenVecs.T)  # (N, K) matrix
     labels = labels.reshape(-1,1)
     data = np.concatenate((engineValues, labels), axis=1)
     # Store the train faces, engine values and labels into a .npy file
@@ -125,8 +125,9 @@ def predict(testFace):
     """
     # Load the train faces, engine values and labels from the .npy file
     data = np.load('trainFaces.npy', allow_pickle=True)
-    engineValues = data[:,range(0,K)]
-    labels = data[:,K]
+    col = data.shape[1]
+    engineValues = data[:, range(0, col - 1)]
+    labels = data[:, col - 1]
     # engineValues, labels = np.load('trainFaces.npy', allow_pickle=True)
 
     # Load the orthogonalized engine faces and average face from the .npy file
@@ -150,11 +151,20 @@ def predict(testFace):
 if __name__ == '__main__':
     train, trainLables = readTrainImgsAndLabels()
     test, testLables = readTestImgsAndLabels()
-    getEngineFaces(train, K)
+
+    ks = [5, 10, 15, 20,30,40,60,80,100,140,180]
+    accuracies = [0.825, 0.9, 0.9375, 0.95,0.9625, 0.9625,0.9625, 0.95, 0.9625, 0.9625, 0.9625]
+
+    getEngineFaces(train, 30)
     trainFaces(train, trainLables)
     correct = 0
     for i in range(len(test)):
         if predict(test[i]) == testLables[i]:
             correct += 1
-    print('Accuracy: ' + str(correct / len(test)))
+    print(float(correct)/len(test))
 
+    # draw plot of k vs accuracy
+    plt.plot(ks, accuracies)
+    plt.xlabel('k')
+    plt.ylabel('accuracy')
+    plt.show()
