@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import os
 
 trainImg_Num = 8
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     print(float(correct)/len(test))
 
     # draw plot of k vs accuracy
-    plt.plot(ks, accuracies)
-    plt.xlabel('k')
-    plt.ylabel('accuracy')
-    plt.show()
+    # plt.plot(ks, accuracies)
+    # plt.xlabel('k')
+    # plt.ylabel('accuracy')
+    # plt.show()

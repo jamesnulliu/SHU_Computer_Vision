@@ -4,11 +4,8 @@ import os
 
 def read_imgs():
     """
-    Read imgs from folder "number_data".
-    All img is reshaped to (60, 60) and flatten to (3600, ).
-
-    Returns A list of test imgs and a list of test labels, and a list of train 
-    imgs and a list of tain labels.
+    Read images from number_data folder and return a list of test_imgs, a list of test_labels, a list of train_imgs and a list of train_labels.
+    Type of test_imgs and train_imgs is np.array of uint8, and the shape of each element is (30, 30).
     """
     test_imgs = []
     test_labels = []
@@ -20,8 +17,7 @@ def read_imgs():
             img_path = os.path.join(path, img_name)
             img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
             img = cv2.resize(img, (60, 60))
-            img = img.reshape(-1)
-            img = np.array(img, dtype=np.float32)
+            img = np.array(img, dtype=np.int8)
             label = int(img_name[0])
             if folder == "testing":
                 test_imgs.append(img)
