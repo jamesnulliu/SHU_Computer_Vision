@@ -52,7 +52,7 @@ class CNN_Model(torch.nn.Module):
 
 def get_classifier_CNN(train_data, train_label):
     # Hyper parameters
-    num_epochs = 5 
+    num_epochs = 10 
     batch_size = 32 
     learning_rate = 0.001
 
@@ -63,11 +63,6 @@ def get_classifier_CNN(train_data, train_label):
     # Model
     model = CNN_Model()
     model.cuda()
-
-    # Print Model information
-    # print(model)
-    # Print train data information
-    # print("Train data size:{}".format(train_data_loader.dataset.tensors[0].size()))
 
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()

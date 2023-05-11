@@ -16,7 +16,7 @@ def read_imgs():
         for img_name in os.listdir(path):
             img_path = os.path.join(path, img_name)
             img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-            img = cv2.resize(img, (60, 60))
+            img = cv2.resize(img, (64, 64))
             img = np.array(img, dtype=np.int8)
             label = int(img_name[0])
             if folder == "testing":
