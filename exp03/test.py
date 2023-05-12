@@ -66,7 +66,7 @@ def test_CNN():
     test_imgs, test_labels, train_imgs, train_labels = read_imgs()
 
     train_time_start = cv2.getTickCount()
-    cnn = get_classifier_CNN(train_imgs, train_labels)
+    cnn = get_classifier_CNN(train_imgs, train_labels, test_imgs, test_labels)
     train_time_stop = cv2.getTickCount()
     print("CNN Training time: ", (train_time_stop - train_time_start)/cv2.getTickFrequency())
 
@@ -84,6 +84,7 @@ def test_CNN():
             correct += 1
     print(correct/float(len(test_imgs)))
     print("Done.")
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -108,4 +109,5 @@ if __name__ == "__main__":
     # plt.ylabel("Training time")
     # plt.show()
     test_HOG_SVM()
+    # test_CNN()
     
